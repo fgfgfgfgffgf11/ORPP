@@ -1,0 +1,65 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+<<<<<<< HEAD
+        Summ sum = new Summ();
+        sum.Rename(22, 14);
+        sum.Info();
+        sum.Diff();
+        sum.Min();
+    }
+}
+
+class Summ
+{
+    public int number1 = 5;
+    public int number2 = 10;
+
+    public void Info()
+    {
+        Console.WriteLine($"Первое число: {number1}");
+        Console.WriteLine($"Второе число: {number2}");
+    }
+
+    public void Rename(int num1, int num2)
+    {
+        this.number1 = num1;
+        this.number2 = num2;
+        Console.WriteLine($"Измененные значения a и b: {number1}, {number2}");
+    }
+
+    public void Diff()
+    {
+        Console.WriteLine($"Разность чисел a и b: {number1 - number2} ");
+    }
+
+    public void Min()
+    {
+        Console.WriteLine($"Меньшее: {Math.Min(number1, number2)}");
+=======
+        Counter cou = new Counter();
+        cou.Minus();
+        cou.Plus();
+    }
+}
+
+class Counter
+{
+    public float number = 10.0F;
+
+    public void Plus()
+    {
+        this.number = number + 2;
+        Console.WriteLine($"Плюс к числу: {number}");
+    }
+
+    public void Minus()
+    {
+        this.number = number - 1;
+        Console.WriteLine($"Минус к числу: {number}");
+>>>>>>> v2
+    }
+}
