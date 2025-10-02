@@ -1,0 +1,21 @@
+using System;
+using System.ComponentModel.Design;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+      Check che = new Check();
+        che.Treyg(1, 4, 10);
+    }
+}
+
+class Check
+{
+    public void Treyg(int a, int b, int c)
+    {
+        if (a > 0 || b > 0 || c > 0) { Console.WriteLine("Молодец. Треугольник можно построить."); }
+        else { Console.WriteLine("Треугольник нельзя построить!"); }
+
+    }
+}
