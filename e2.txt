@@ -1,0 +1,28 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Counter cou = new Counter();
+        cou.Minus();
+        cou.Plus();
+    }
+}
+
+class Counter
+{
+    public float number = 10.0F;
+
+    public void Plus()
+    {
+        this.number = number + 2;
+        Console.WriteLine($"Плюс к числу: {number}");
+    }
+
+    public void Minus()
+    {
+        this.number = number - 1;
+        Console.WriteLine($"Минус к числу: {number}");
+    }
+}
