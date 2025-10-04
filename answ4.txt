@@ -1,0 +1,39 @@
+using System;
+using System.ComponentModel.Design;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+     BankAccount account = new BankAccount();
+        account.Deposit();
+        account.Withdrawal();
+        account.Info();
+    }
+}
+
+class BankAccount
+{
+    public string account_number = "68950490967605";
+    public string name = "Михаил";
+    public double balance = 119;
+
+    public void Deposit()
+    {
+        this.balance = balance + 400;
+        Console.WriteLine($"Пользователь внес на счет 400р, его баланс: {balance}");
+
+    }
+    public void Withdrawal()
+    {
+        this.balance = balance - 19;
+        if (balance > 0) { Console.WriteLine($"Пользователь купил кириешки за 19р, его остаточный баланс: {balance}."); }
+        else { Console.WriteLine($"Операция отклонена. Не хватает средств."); }
+    }
+    public void Info()
+    {
+        Console.WriteLine($"Имя пользователя лицевого счета: {name}.");
+        Console.WriteLine($"Номер лицевого счета: {account_number}.");
+        Console.WriteLine($"Информация о балансе: {balance}р.");
+    }
+}
