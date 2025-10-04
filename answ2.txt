@@ -1,0 +1,39 @@
+using System;
+using System.ComponentModel.Design;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+     Book bok = new Book();
+        bok.Info();
+        bok.Check();
+    }
+}
+
+class Book
+{
+    public string name = "Крутое похождение Гриши";
+    public string autor = "Г.П. Распариков";
+    public string isbn = "8923051245001";
+    public int paper = 356;
+
+    public void Info()
+    {
+        Console.WriteLine($"Автор книги: {autor}.");
+        Console.WriteLine($"Название книги: {name}.");
+        Console.WriteLine($"Уникальный международный номер книги: {isbn}.");
+        Console.WriteLine($"Количество страниц в книге: {paper}");
+    }
+    public void Check()
+    {
+        if (paper > 500)
+        {
+            Console.WriteLine($"Книга имеет более 500 страниц");
+        }
+        else
+        {
+            Console.WriteLine("Книга маленькая, не более 500 страниц.");
+        }
+    }
+}
