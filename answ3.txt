@@ -1,0 +1,43 @@
+using System;
+using System.ComponentModel.Design;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+     Rectangle rec = new Rectangle();
+        rec.Area();
+        rec.Perimeter();
+        rec.Check();
+    }
+}
+
+class Rectangle
+{
+    public int width = 4;
+    public int height = 7;
+
+
+    public void Area()
+    {
+        int area = width * height;
+        Console.WriteLine($"Площадь прямоугольника равна {area}.");
+    }
+
+    public void Perimeter()
+    {
+        int per = (width + height) * 2;
+        Console.WriteLine($"Периметр прямоугольника равнен {per}");
+    }
+    public void Check()
+    { 
+        if (width == height)
+        {
+            Console.WriteLine("Ширина и длина прямоугольника равны, следовательно, это квадрат.");
+        }
+        else
+        {
+            Console.WriteLine("Ширина и длина не равны, прямоугольник не является квадратом.");
+        }
+    }
+}
