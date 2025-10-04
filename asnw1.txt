@@ -1,0 +1,38 @@
+using System;
+using System.ComponentModel.Design;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+     Coord cord = new Coord();
+        cord.Rust();
+        cord.Move(1,2,6,7);
+    }
+}
+
+class Coord
+{
+    public double x1 = 10;
+    public double y1 = 4;
+
+    public double x2 = 4;
+    public double y2 = 10;
+
+    public void Rust()
+    {
+        double rast = (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
+        double okon_rast = Math.Sqrt(rast);
+        Console.WriteLine($"Расстояние от точки до точки:{okon_rast}");
+    }
+    
+    public void Move(double x1,double y1, double x2, double y2)
+    {
+        this.x1 =+5;
+        this.y1 =+2;
+        this.x2 =+0;
+        this.y2 +=1;
+        Console.WriteLine($"Точки сдвинулись и теперь принимают значения: {x1},{y2} и {x2},{y2}");
+
+    }
+}
