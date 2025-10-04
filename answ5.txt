@@ -1,0 +1,28 @@
+using System;
+using System.ComponentModel.Design;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+     Circle krug = new Circle();
+        krug.Area();
+        krug.Length();
+    }
+}
+
+class Circle
+{
+    public double radius = 4;
+
+    public void Area()
+    {
+        double area = 3.14 * radius * radius;
+        Console.WriteLine($"Площадь круга равна {area}.");
+    }
+    public void Length()
+    {
+        double length = 2 * 3.14 * radius;
+        Console.WriteLine($"Длина окружности круга равна {length}.");
+    }
+}
