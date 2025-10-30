@@ -1,0 +1,187 @@
+using System;
+using System.Collections.Generic;
+
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Добрый день, клиент. В этом меню Вы можете сгенерировать собственный заказ продуктов со склада. Пожалуйста, следуйте нескольким этапам.");
+        Console.ReadKey();
+
+        Warehouse warehouse = new Warehouse();
+        SystemOrder systemOrder = new SystemOrder(warehouse);
+        AddWarehouse addWarehouse = new AddWarehouse();
+
+        Console.WriteLine("Шаг №1. Добавление товара");
+        addWarehouse.add(warehouse);
+
+        Console.WriteLine("Товары на складе:");
+        if (warehouse.Products.Count == 0)
+            Console.WriteLine("Склад пуст.");
+        else
+            foreach (var p in warehouse.Products)
+                Console.WriteLine($"{p.Name} — {p.Quantity} шт.");
+
+
+        Console.WriteLine("\nШаг №2. Создание заказа");
+        var orderProducts = new List<Product>();
+
+        while (true)
+        {
+            Console.Write("Введите название товара для заказа (или 'готово' для завершения): ");
+            string productName = Console.ReadLine();
+            if (productName?.ToLower() == "готово")
+                break;
+
+            Console.Write($"Введите количество '{productName}': ");
+            if (int.TryParse(Console.ReadLine(), out int qty) && qty > 0)
+            {
+                orderProducts.Add(new Product(productName, qty));
+            }
+            else
+            {
+                Console.WriteLine("Некорректное количество. Товар не добавлен.");
+            }
+        }
+
+        if (orderProducts.Count == 0)
+        {
+            Console.WriteLine("Заказ пуст. Обработка пропущена.");
+        }
+        else
+        {
+            var order = new Order(1, orderProducts);
+            systemOrder.AddOrder(order);
+
+            Console.WriteLine("\nШаг №3. Обработка заказа");
+            systemOrder.ProcessNextOrder();
+        }
+    }
+}
+
+public class Product
+{
+    public string Name;
+    public int Quantity;
+
+    public Product(string name, int quantity)
+    {
+        this.Name = name;
+        this.Quantity = quantity;
+    }
+
+}
+
+public class Order
+{
+    public int numberOrder;
+    public DateTime dateOrder;
+    public List<Product> listProducts;
+
+    public Order(int numberOrder, List<Product> products)
+    {
+        this.numberOrder = numberOrder;
+        dateOrder = DateTime.Now;
+        listProducts = new List<Product>(products);
+    }
+}
+
+public class Warehouse
+{
+    public List<Product> Products  = new List<Product>();
+
+    public void AddProduct(string name, int quantity)
+    {
+        var existing = Products.FirstOrDefault(p => p.Name == name);
+        if (existing != null)
+        {
+            existing.Quantity += quantity;
+        }
+        else
+        {
+            Products.Add(new Product(name, quantity));
+        }
+    }
+
+    public bool HasSufficientStock(Order order)
+    {
+        foreach (var requested in order.listProducts)
+        {
+            var stock = Products.FirstOrDefault(p => p.Name == requested.Name);
+            if (stock == null || stock.Quantity < requested.Quantity)
+                return false;
+        }
+        return true;
+    }
+
+    public void DeductStock(Order order)
+    {
+        foreach (var requested in order.listProducts)
+        {
+            var stock = Products.First(p => p.Name == requested.Name);
+            stock.Quantity -= requested.Quantity;
+            if (stock.Quantity <= 0)
+            {
+                Products.Remove(stock);
+            }
+        }
+    }
+}
+
+class SystemOrder
+{
+    public Queue<Order> orders = new Queue<Order>();
+    public Warehouse warehouse; 
+    public SystemOrder(Warehouse warehouse)
+    {
+        this.warehouse = warehouse;
+    }
+
+    public void AddOrder(Order order)
+    {
+        orders.Enqueue(order);
+        Console.WriteLine($"Заказ №{order.numberOrder} добавлен в очередь.");
+    }
+    public void ProcessNextOrder()
+    {
+        if (orders.Count == 0)
+        {
+            Console.WriteLine("Очередь пуста");
+            return;
+        }
+
+        Order order = orders.Dequeue(); 
+        Console.WriteLine($"\n Обработка заказа №{order.numberOrder} от {order.dateOrder:yyyy-MM-dd HH:mm}");
+
+        if (warehouse.HasSufficientStock(order))
+        {
+            warehouse.DeductStock(order);
+            Console.WriteLine($"Заказ №{order.numberOrder} успешно обработан!");
+        }
+        else
+        {
+            Console.WriteLine($"Недостаточно товаров на складе для заказа #{order.numberOrder}. Заказ отменён.");
+        }
+    }
+}
+
+class AddWarehouse
+{
+    public void add(Warehouse warehouse)
+    {
+        Console.Write("Введите название товара: ");
+        string name = Console.ReadLine();
+
+        Console.Write("Введите количество: ");
+        if (int.TryParse(Console.ReadLine(), out int quantity))
+        {
+            warehouse.AddProduct(name, quantity);
+            Console.WriteLine($"Товар '{name}' ({quantity} шт.) добавлен на склад.");
+        }
+        else
+        {
+            Console.WriteLine("Некорректное количество.");
+        }
+    }
+}
